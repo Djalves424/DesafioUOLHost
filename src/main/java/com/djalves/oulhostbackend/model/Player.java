@@ -9,6 +9,8 @@ import lombok.*;
 @Table(name = "tb_players")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Player {
 
@@ -20,7 +22,7 @@ public class Player {
     @NotBlank
     private String email;
     private String phoneNumber;
-    private String codeName;
+    private String codiname;
     private GroupType groupType;
 
     public Player(PlayerDTO dto) {

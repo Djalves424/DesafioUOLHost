@@ -6,16 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CodiNameHandler {
+public class CodinameHandler {
 
     @Autowired
     private CodinameService service;
 
-    public String findCodename(GroupType groupType) {
+    public String findCodiname(GroupType groupType) {
 
         if (groupType == GroupType.AVANGERS) {
-            String firstMatch = service.getAvangersCodenameList().stream().findFirst().orElseThrow();
-            this.service.getAvangersCodenameList().remove(firstMatch);
+            String firstMatch = service.getAvangersCodinameList().stream().findFirst().orElseThrow();
+            this.service.getAvangersCodinameList().remove(firstMatch);
             return firstMatch;
         }
 

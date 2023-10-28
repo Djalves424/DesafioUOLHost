@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
-import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.w3c.dom.Document;
@@ -28,24 +28,22 @@ public class CodinameService {
     @Autowired
     private Environment env;
 
-    private List<String> avangersCodenameList = new ArrayList<>();
+    private List<String> avangersCodinameList = new ArrayList<>();
     private List<String> justiceLeagueList = new ArrayList<>();
 
     ObjectMapper objectMapper = new ObjectMapper();
 
     @PostConstruct
     public void loadJsonData() {
-
         try {
-            String codenameResponse = restTemplate.getForObject(env.getProperties().getProperty("avangers"), String.class);
-            JsonNode jsonNode = objectMapper.readTree(codenameResponse);
+            String codinameResponse = restTemplate.getForObject(env.getProperty("avangers"), String.class);
+            JsonNode jsonNode = objectMapper.readTree(codinameResponse);
 
             ArrayNode avangers = (ArrayNode) jsonNode.get("vingadores");
 
             for (JsonNode item : avangers) {
-                this.avangersCodenameList.add(item.get("codeName").asText());
+                this.avangersCodinameList.add(item.get("codinome").asText());
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,14 +56,14 @@ public class CodinameService {
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(env.getProperties().getProperty("justice_league"));
+            Document document = builder.parse(env.getProperty("justice.league"));
 
-            NodeList codenameList = document.getElementsByTagName("codename");
+            NodeList codinameList = document.getElementsByTagName("codinome");
 
-            for (int i = 0; i < codenameList.getLength(); i++) {
-                Element codinameElement = (Element) codenameList.item(i);
-                String codename = codinameElement.getTextContent();
-                this.justiceLeagueList.add(codename);
+            for (int i = 0; i < codinameList.getLength(); i++) {
+                Element codinameElement = (Element) codinameList.item(i);
+                String codiname = codinameElement.getTextContent();
+                this.justiceLeagueList.add(codiname);
             }
 
 
